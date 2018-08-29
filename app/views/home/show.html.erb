@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <body style="background-color:#EBF7FF">
+      <div class="main">
+        <br><h1>캡슐이 보관중이에요!</h1><br>
+그룹명 : <%=@post.group%><br>
+그룹코드 : <%=@post.code%><br>
+생성 날짜 : <%=@post.fromday%><br>
+작성시간 : <%=Time.at(@post.created_at.to_i+ 9*60*60)%><br>
+데드라인 : <%=Time.at(@post.created_at.to_i+ 9*60*60+ @post.minute*60)%><br><br>
+<% if @post.created_at.to_i+ 9*60*60+ @post.minute*60 <  Time.now.to_i + 9*60*60 %>
+    <a href='/home/showegg/<%=@post.id%>' >캡슐열어보기</a><br><br>
+<%end%>
+<div id="clockdiv" class ="row"> 
+  <div class= "col-sm"> 
+    <span class="days"></span>  
+    <div class="smalltext">Days</div>   
+  </div>    
+  
+  <div class= "col-sm">
+    <span class="hours"></span>
+    <div class="smalltext">Hours</div>
+  </div>
+  
+  <div  class= "col-sm">
+    <span class="minutes"></span>
+    <div class="smalltext">Minutes</div>
+  </div>
+  
+  <div class= "col-sm">
+    <span class="seconds"></span>
+    <div class="smalltext">Seconds</div>
+  </div>
+  
+</div>
+
+<script>
+    function getTimeRemaining(endtime) {
+      var t = Date.parse(endtime) - Date.parse(new Date());
+      var seconds = Math.floor((t / 1000) % 60);
+      var minutes = Math.floor((t / 1000 / 60) % 60);
+      var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+      var days = Math.floor(t / (1000 * 60 * 60 * 24));
+      return {
+        'total': t,
+        'days': days,
+        'hours': hours,
+        'minutes': minutes,
+        'seconds': seconds
+      };
+    }
+    
+    function initializeClock(id, endtime) {
+      var clock = document.getElementById(id);
+      var daysSpan = clock.querySelector('.days');
+      var hoursSpan = clock.querySelector('.hours');
+      var minutesSpan = clock.querySelector('.minutes');
+      var secondsSpan = clock.querySelector('.seconds');
+    
+      function updateClock() {
+        var t = getTimeRemaining(endtime);
+    
+        daysSpan.innerHTML = t.days;
+        hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+        minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+        secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+    
+        if (t.total <= 0) {
+          clearInterval(timeinterval);
+        }
+      }
+    
+      updateClock();
+      var timeinterval = setInterval(updateClock, 1000);
+    }
+    var deadline = new Date(<%=@post.created_at.to_i+ @post.minute*60%>*1000);
+    initializeClock('clockdiv', deadline);
+</script>
+<br>
+
+<a href = '/home/destroy/<%=@post.id%>'>폭파</a><br>
+-----------------------------<br><br><br><br>
+<a href = '/home/index'>홈으로</a>
+
+
+<style>
+body{
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: 100;
+  font-size: 20px;
+}
+
+h1{
+  color: #396;
+  font-weight: 100;
+  font-size: 40px;
+  margin: 40px 0px 20px;
+}
+
+#clockdiv{
+    font-family: sans-serif;
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
+    width: 320px;
+}
+
+#clockdiv > div{
+    padding: 10px;
+    border-radius: 3px;
+    background: #00BF96;
+    display: inline-block;
+    float: left;
+}
+
+#clockdiv div > span{
+    padding: 15px;
+    border-radius: 3px;
+    background: #00816A;
+    display: inline-block;
+    float: left;
+}
+
+.smalltext{
+    padding-top: 5px;
+    font-size: 16px;
+}
+</style>
+      </div>
+    </body>
+
+
+

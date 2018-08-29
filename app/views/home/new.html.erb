@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <body style="background-color:#EBF7FF">
+        <div class="main">
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+<h1>글쓰기</h1>
+<%= form_for @post, url: home_create_path do |f| %>
+GROUP: <b><%= f.text_field :group %><br></b>
+CODE: <%= f.text_field :code %><br>
+생성 날짜 : <%= f.date_field :fromday %><br>
+내용 : <%= f.text_area :content %><br>
+몇 분? : <%=f.number_field :minute %><br>
+<div class='pic'>
+사진 파일 1 : <%= f.file_field :image %><br> 
+사진 파일 2 : <%= f.file_field :image2 %><br> 
+사진 파일 3 : <%= f.file_field :image3 %><br> 
+</div>
+<%= f.submit '작성' %>
+<% end %>  
+            
+        </div> 
+    </body>
+
+<style>
+    div{
+        text-align: center;
+    }
+</style>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <body style="background-color:#EBF7FF">
+        <div class="main">
+            <br><h1>캡슐이 열렸어요!</h1><br>
+그룹명 : <%=@post.group%><br>
+그룹코드 : <%=@post.code%><br>
+생성 날짜 : <%=@post.fromday%><br><br>
+내용 : <%=@post.content%><br>
+         <image src=<%=@post.img_url.thumb1%>>
+         <image src=<%=@post.img_url2.thumb2%>>
+         <image src=<%=@post.img_url3.thumb3%>><br>
+작성시간 : <%=Time.at(@post.created_at.to_i+ 9*60*60)%><br>
+데드라인 : <%=Time.at(@post.created_at.to_i+ 9*60*60+ @post.minute*60)%><br><br>
+<a href = '/home/destroy/<%=@post.id%>'>폭파</a><br>
+<a href = '/home/index'>홈으로</a><br>
+        </div>
+    </body>
+</html>
+
+
+<style>
+body{
+  font-family: sans-serif;
+  font-weight: 100;
+  font-size: 20px;
+}
+
+h1{
+  color: #396;
+  font-weight: 100;
+  font-size: 40px;
+  margin: 40px 0px 20px;
+}
+
+
+</style>
